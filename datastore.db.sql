@@ -1,0 +1,21 @@
+BEGIN TRANSACTION;
+CREATE TABLE IF NOT EXISTS "SubDataType" (
+	"Id"	INTEGER PRIMARY KEY AUTOINCREMENT,
+	"DataTypeId"	INT,
+	"Title"	INT,
+	"SubDataTypeId"	INT,
+	FOREIGN KEY("SubDataTypeId") REFERENCES "DataType"("Id")
+);
+CREATE TABLE IF NOT EXISTS "DataType" (
+	"Id"	INTEGER PRIMARY KEY AUTOINCREMENT,
+	"Title"	TEXT,
+	"Base"	INT,
+	"Length"	INT
+);
+CREATE TABLE IF NOT EXISTS "UniformService" (
+	"Id"	INTEGER PRIMARY KEY AUTOINCREMENT,
+	"Title"	TEXT,
+	"InputDataTypeId"	INT,
+	"OutputDataTypeId"	INT
+);
+COMMIT;

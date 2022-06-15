@@ -22,7 +22,7 @@ def setup():
     cur.execute(
         "CREATE TABLE IF NOT EXISTS DataType(Id INTEGER PRIMARY KEY AUTOINCREMENT, Title TEXT, Base INT, Length INT);")
     cur.execute(
-        "CREATE TABLE IF NOT EXISTS SubDataType(Id INTEGER PRIMARY KEY AUTOINCREMENT, DataTypeId INT, Title INT, SubDataTypeId INT);")
+        "CREATE TABLE IF NOT EXISTS SubDataType(Id INTEGER PRIMARY KEY AUTOINCREMENT, DataTypeId INT, Title INT, SubDataTypeId INT REFERENCES DataType(Id));")
     db.commit()
     db.close()
 
@@ -151,6 +151,15 @@ def uniformservice_id(id):
         return json.dumps(service)
     return "{error:'Invalid method'}"
 
+
+@app.route("/sitemap")
+def sitemap():
+    routes = []
+    i=0
+    for r in app.url_map._rules:
+        i=i+1
+        routes.append([i,r.rule,",".join(list(r.methods))])
+    return json.dumps(routes)
 
 setup()
 
